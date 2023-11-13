@@ -3,9 +3,9 @@ clear all;
 %%
 %读取
 % filename=('E:\FTW\IMU_Space\IMU_Space\CeShi\FT1-test\lz2-1.csv');
-% filename=('E:\FTW\record\DOE_pressure\fama\5-3-1.csv');
+filename=('E:\FTW\record\DOE_pressure\fama\3-6-1.csv');
 % filename=('E:\FTW\record\Area\dct_R-4-1.csv');
-filename=('E:\FTW\record\DOE_pressure\11qu\wkr-1-1.csv');
+% filename=('E:\FTW\record\DOE_pressure\11qu\zhf-2-1.csv');
 % filename=('E:\FTW\record\DOE_pressure\fenqu\sry0926-70hz-12-1.csv');
 [num,txt] = xlsread(filename);
  a=txt(length(txt)-2);
@@ -38,45 +38,45 @@ for i=4:interval:num_rows-n+1
    L_pressure=data_extract(:,1:20);%左脚压力矩阵
    R_pressure=data_extract(:,21:end);%右脚压力矩阵
 %% 行列
-   [row_L,col_L]=find(L_pressure);
-   [row_R,col_R]=find(R_pressure);
-
-   if isempty(row_L)
-    % 如果find没有找到满足条件的元素，给数组一个特定的值
-    row_L = [row_L,5]; % 为数组A添加一个5
-   end
-   if isempty(col_L)
-    col_L = [col_L,5]; 
-   end
-   if isempty(row_R)
-    row_R = [row_R,5]; 
-   end
-      if isempty(col_R)
-    col_R = [col_R,5]; 
-     end
-   
-   Start_Row_L=min(row_L); %开始的行列是有数据的行列数的最小值
-   Start_Col_L=min(col_L);
-   Start_Row_R=min(row_R);
-   Start_Col_R=min(col_R);
-   
-   Start_Row_L1(i)=Start_Row_L; %开始的行列是有数据的行列数的最小值
-   Start_Col_L1(i)=Start_Col_L; 
-   Start_Row_R1(i)=Start_Row_R; %开始的行列是有数据的行列数的最小值
-   Start_Col_R1(i)=Start_Col_R; 
-  
-   End_Row_L=max(row_L); %结束的行列是有数据的行列数的最大值
-   End_Col_L=max(col_L);
-   End_Row_R=max(row_R);
-   End_Col_R=max(col_R);
-   
-   End_Row_L1(i)=End_Row_L; %开始的行列是有数据的行列数的最小值
-   End_Col_L1(i)=End_Col_L; 
-   End_Row_R1(i)=End_Row_R; %开始的行列是有数据的行列数的最小值
-   End_Col_R1(i)=End_Col_R; 
-%% fama
-%   L_pressure=data_extract(:,1:20);%左脚压力矩阵
-%  Stress_L(i)=sum(sum(L_pressure.*19.36*0.0001*10));
+%    [row_L,col_L]=find(L_pressure);
+%    [row_R,col_R]=find(R_pressure);
+% 
+%    if isempty(row_L)
+%     % 如果find没有找到满足条件的元素，给数组一个特定的值
+%     row_L = [row_L,5]; % 为数组A添加一个5
+%    end
+%    if isempty(col_L)
+%     col_L = [col_L,5]; 
+%    end
+%    if isempty(row_R)
+%     row_R = [row_R,5]; 
+%    end
+%       if isempty(col_R)
+%     col_R = [col_R,5]; 
+%      end
+%    
+%    Start_Row_L=min(row_L); %开始的行列是有数据的行列数的最小值
+%    Start_Col_L=min(col_L);
+%    Start_Row_R=min(row_R);
+%    Start_Col_R=min(col_R);
+%    
+%    Start_Row_L1(i)=Start_Row_L; %开始的行列是有数据的行列数的最小值
+%    Start_Col_L1(i)=Start_Col_L; 
+%    Start_Row_R1(i)=Start_Row_R; %开始的行列是有数据的行列数的最小值
+%    Start_Col_R1(i)=Start_Col_R; 
+%   
+%    End_Row_L=max(row_L); %结束的行列是有数据的行列数的最大值
+%    End_Col_L=max(col_L);
+%    End_Row_R=max(row_R);
+%    End_Col_R=max(col_R);
+%    
+%    End_Row_L1(i)=End_Row_L; %开始的行列是有数据的行列数的最小值
+%    End_Col_L1(i)=End_Col_L; 
+%    End_Row_R1(i)=End_Row_R; %开始的行列是有数据的行列数的最小值
+%    End_Col_R1(i)=End_Col_R; 
+% fama
+  L_pressure=data_extract(:,1:20);%左脚压力矩阵
+ Stress_L(i)=sum(sum(L_pressure.*19.36*0.0001*10));
    %% 接触面积
    points_L=nnz(L_pressure);%接触点数，计算矩阵中非零元素的数量
    L_points(i)=points_L;
@@ -86,8 +86,8 @@ for i=4:interval:num_rows-n+1
    R_points(i)=points_R;
    Area_R(i)=points_R*4.4*4.4;%一个点4.4mm*4.4mm
 end
-%% fama
-% Stress_L=Stress_L(4:interval:end)';
+% fama
+Stress_L=Stress_L(4:interval:end)';
 
 %% 接触面积,单位cm^2
    L_points=L_points(4:interval:end)';%左脚接触点数变化
@@ -294,7 +294,7 @@ Stress_R=Stress_R(4:interval:end)';
 % set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
 % set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
 
-
+%% 右
 plot(numt,Stress_R_Heel_Lateral,'LineWidth', 1);hold on
 plot(numt,Stress_R_Heel_Medial,'LineWidth', 1);hold on
 plot(numt,Stress_R_M1,'LineWidth', 1);hold on
@@ -317,43 +317,7 @@ set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
 set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
 ylim([0, 35]);
 
-
-%% 截取曲线的一部分
-figure
-x_min = 1505;
-x_max = 2620;
-% 找出要截取的数据点索引
-indices_to_keep = (numt>= x_min) & (numt<= x_max);
-% 仅绘制被截取的数据点
-plot(numt(indices_to_keep), Stress_R_Heel_Lateral(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_Heel_Medial(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_M1(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_M2(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_M3(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_M4(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_M5(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_Midfoot_Lateral(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_Midfoot_Medial(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_T1(indices_to_keep),'LineWidth', 1);hold on
-plot(numt(indices_to_keep), Stress_R_T2(indices_to_keep),'LineWidth', 1);hold on
-
-% 自定义 x 轴刻度值和标签
-custom_x_values = [x_min:278: x_max];
-custom_x_labels = {'0', '250', '500','750','1000'};
-% 设置 x 轴刻度值和标签
-xticks(custom_x_values);
-xticklabels(custom_x_labels);
-legend( '足后跟外侧','足后跟内侧','第一跖骨',...
-    '第二跖骨','第三跖骨','第四跖骨','第五跖骨','足弓外侧',...
-    '足弓内侧', '大拇指', '其余四指');
-title('右脚区域接触力变化','FontSize',16);
-xlabel('毫秒（ms）','FontSize',16);
-ylabel('接触力/kg','FontSize',16);
-ax = gca;%获取当前坐标轴对象
-set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
-set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
-ylim([0, 28]);
-%
+%% 左
 figure;%再建立一个窗口
 
 plot(numt,Stress_L_Heel_Lateral,'LineWidth', 1);hold on
@@ -377,3 +341,97 @@ ax = gca;%获取当前坐标轴对象
 set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
 set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
 ylim([0, 35]);
+
+%% 截取曲线的一部分（右R）
+figure
+x_min =1520;
+x_max =2520;
+% 找出要截取的数据点索引
+indices_to_keep = (numt>= x_min) & (numt<= x_max);
+color_T1=[162/255,32/255,236/255];
+color_T2=[255/255,0/255,255/255];
+color_M1=[254/255,190/255,251/255];
+color_M2=[254/255,164/255,0/255];
+color_M3=[0/255,253/255,2/255];
+color_M4=[2/255,100/255,1/255];
+color_M5=[0/255,2/255,254/255];
+color_CM=[135/255,136/255,138/255];
+color_CL=[135/255,206/255,251/255];
+color_HM=[3/255,138/255,142/255];
+color_HL=[136/255,71/255,17/255];
+% 仅绘制被截取的数据点
+plot(numt(indices_to_keep), Stress_R_Heel_Lateral(indices_to_keep),'LineWidth', 1,'Color',color_HL);hold on
+plot(numt(indices_to_keep), Stress_R_Heel_Medial(indices_to_keep),'LineWidth', 1,'Color',color_HM);hold on
+plot(numt(indices_to_keep), Stress_R_M1(indices_to_keep),'LineWidth', 1,'Color',color_M1);hold on
+plot(numt(indices_to_keep), Stress_R_M2(indices_to_keep),'LineWidth', 1,'Color',color_M2);hold on
+plot(numt(indices_to_keep), Stress_R_M3(indices_to_keep),'LineWidth', 1,'Color',color_M3);hold on
+plot(numt(indices_to_keep), Stress_R_M4(indices_to_keep),'LineWidth', 1,'Color',color_M4);hold on
+plot(numt(indices_to_keep), Stress_R_M5(indices_to_keep),'LineWidth', 1,'Color',color_M5);hold on
+plot(numt(indices_to_keep), Stress_R_Midfoot_Lateral(indices_to_keep),'LineWidth', 1,'Color',color_CL);hold on
+plot(numt(indices_to_keep), Stress_R_Midfoot_Medial(indices_to_keep),'LineWidth', 1,'Color',color_CM);hold on
+plot(numt(indices_to_keep), Stress_R_T1(indices_to_keep),'LineWidth', 1,'Color',color_T2);hold on
+plot(numt(indices_to_keep), Stress_R_T2(indices_to_keep),'LineWidth', 1,'Color',color_T1);hold on
+
+% 自定义 x 轴刻度值和标签
+custom_x_values = [x_min:250: x_max];
+custom_x_labels = {'0', '250', '500','750','1000'};
+% 设置 x 轴刻度值和标签
+xticks(custom_x_values);
+xticklabels(custom_x_labels);
+legend( '足后跟外侧','足后跟内侧','第一跖骨',...
+    '第二跖骨','第三跖骨','第四跖骨','第五跖骨','足弓外侧',...
+    '足弓内侧', '大拇指', '其余四指');
+title('右脚区域接触力变化','FontSize',16);
+xlabel('毫秒（ms）','FontSize',16);
+ylabel('接触力/kg','FontSize',16);
+ax = gca;%获取当前坐标轴对象
+set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
+set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
+ylim([0, 30]);
+
+%% 截取曲线的一部分（左L）
+figure
+x_min=3880;
+x_max=4670;
+%找出要截取的数据点索引
+indices_to_keep = (numt>= x_min) & (numt<= x_max);
+color_T1=[162/255,32/255,236/255];
+color_T2=[255/255,0/255,255/255];
+color_M1=[254/255,190/255,251/255];
+color_M2=[254/255,164/255,0/255];
+color_M3=[0/255,253/255,2/255];
+color_M4=[2/255,100/255,1/255];
+color_M5=[0/255,2/255,254/255];
+color_CM=[135/255,136/255,138/255];
+color_CL=[135/255,206/255,251/255];
+color_HM=[3/255,138/255,142/255];
+color_HL=[136/255,71/255,17/255];
+% 仅绘制被截取的数据点
+plot(numt(indices_to_keep), Stress_L_Heel_Lateral(indices_to_keep),'LineWidth', 1,'Color',color_HL);hold on
+plot(numt(indices_to_keep), Stress_L_Heel_Medial(indices_to_keep),'LineWidth', 1,'Color',color_HM);hold on
+plot(numt(indices_to_keep), Stress_L_M1(indices_to_keep),'LineWidth', 1,'Color',color_M1);hold on
+plot(numt(indices_to_keep), Stress_L_M2(indices_to_keep),'LineWidth', 1,'Color',color_M2);hold on
+plot(numt(indices_to_keep), Stress_L_M3(indices_to_keep),'LineWidth', 1,'Color',color_M3);hold on
+plot(numt(indices_to_keep), Stress_L_M4(indices_to_keep),'LineWidth', 1,'Color',color_M4);hold on
+plot(numt(indices_to_keep), Stress_L_M5(indices_to_keep),'LineWidth', 1,'Color',color_M5);hold on
+plot(numt(indices_to_keep), Stress_L_Midfoot_Lateral(indices_to_keep),'LineWidth', 1,'Color',color_CL);hold on
+plot(numt(indices_to_keep), Stress_L_Midfoot_Medial(indices_to_keep),'LineWidth', 1,'Color',color_CM);hold on
+plot(numt(indices_to_keep), Stress_L_T1(indices_to_keep),'LineWidth', 1,'Color',color_T2);hold on
+plot(numt(indices_to_keep), Stress_L_T2(indices_to_keep),'LineWidth', 1,'Color',color_T1);hold on
+
+% 自定义 x 轴刻度值和标签
+custom_x_values = [x_min:197.5: x_max];
+custom_x_labels = {'0', '197.5', '395','592.5','790'};
+% 设置 x 轴刻度值和标签
+xticks(custom_x_values);
+xticklabels(custom_x_labels);
+legend( '足后跟外侧','足后跟内侧','第一跖骨',...
+    '第二跖骨','第三跖骨','第四跖骨','第五跖骨','足弓外侧',...
+    '足弓内侧', '大拇指', '其余四指');
+title('左脚区域接触力变化','FontSize',16);
+xlabel('毫秒（ms）','FontSize',16);
+ylabel('接触力/kg','FontSize',16);
+ax = gca;%获取当前坐标轴对象
+set(ax.XAxis, 'LineWidth', 1);  % 设置X轴的粗细
+set(ax.YAxis, 'LineWidth', 1);  % 设置Y轴的粗细
+ylim([0,22]);
